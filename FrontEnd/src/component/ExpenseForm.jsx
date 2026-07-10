@@ -10,7 +10,7 @@ function ExpenseForm() {
   const handleSubmit = async () => {
     const expense = {
       title: title,
-      amount: amount,
+      amount: Number(amount),
       category: category,
     };
 
@@ -19,10 +19,16 @@ function ExpenseForm() {
 
       const response = await axios.post(`${API_URL}/expenses`, expense);
       console.log(response.data);
+      // handle wrapped response
+      const payload = response.data;
+      if (payload && payload.success) {
+        setMessage("Expense Added Successfully!");
+      } else {
+        setMessage("Expense Added Successfully!");
+      }
       setTitle("");
       setAmount("");
       setCategory("");
-      setMessage("Expense Added Successfully!");
 
         setTimeout(() => {
 
