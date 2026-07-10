@@ -10,7 +10,11 @@ function ExpenseTable() {
         const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
         const response = await axios.get(`${API_URL}/expenses`);
         console.log(response.data);
-        setExpenses(response.data);
+        // Handle both wrapped API response { success, message, data }
+        // and a raw array response for compatibility.
+        const payload = response.data;
+        const list = Array.isArray(payload) ? payload : (payload && payload.data) ? payload.data : [];
+        setExpenses(list);
     } catch (error) {
         console.log(error);
     }
