@@ -6,23 +6,15 @@ function ExpenseTable() {
     const [expenses, setExpenses] = useState([]);
 
     const fetchExpenses = async () => {
-
-        try {
-
-            const response = await axios.get("http://localhost:8080/expenses");
-
-            console.log(response.data);
-
-            // If using Generic API Response
-            setExpenses(response.data);
-
-        } catch (error) {
-
-            console.log(error);
-
-        }
-
-    };
+    try {
+        const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+        const response = await axios.get(`${API_URL}/expenses`);
+        console.log(response.data);
+        setExpenses(response.data);
+    } catch (error) {
+        console.log(error);
+    }
+};
 
     useEffect(() => {
 
